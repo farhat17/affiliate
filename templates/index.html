@@ -1,0 +1,148 @@
+{% extends 'layouts/base.html' %}
+{% load static %}
+
+{% block content %}
+<h1>Explore Our Affiliate Offerings</h1>
+
+<main class="main">
+
+  <!-- Portfolio Section -->
+  <section id="portfolio" class="portfolio section">
+    <div class="container">
+      <div class="isotope-layout" data-default-filter="*" data-layout="masonry" data-sort="original-order">
+        <div class="row align-items-center">
+          <div class="col-lg-7 portfolio-info">
+            <h3>Hey, Welcome Here</h3>
+            <p>Enjoy the Best Deals on Products. Get What You Are Searching For...</p>
+          </div>
+          <div class="col-lg-5 text-center text-lg-end">
+            <ul class="portfolio-filters isotope-filters" data-aos="fade-up" data-aos-delay="100">
+              <li data-filter="*" class="filter-active">All</li>
+              {% for category in categories %}
+              <li data-filter=".filter-{{ category.slug }}">{{ category.name }}</li>
+              {% endfor %}
+            </ul><!-- End Portfolio Filters -->
+          </div>
+        </div>
+
+        <div class="row gy-4 isotope-container" data-aos="fade-up" data-aos-delay="200">
+          {% for item in portfolio_items %}
+          <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-{{ item.category.slug }}">
+            <div class="portfolio-content h-100">
+              <img src="{{ item.image.url }}" class="img-fluid" alt="{{ item.title }}">
+              <div class="portfolio-info">
+                <h4>{{ item.title }}</h4>
+                <p>{{ item.short_description }}</p>
+                <div>
+                  <a href="{{ item.image.url }}" title="{{ item.title }}" data-gallery="portfolio-gallery-{{ item.category.slug }}" class="glightbox preview-link">
+                    <i class="bi bi-zoom-in"></i>
+                  </a>
+                  <a href="{{item.button}}" title="More Details" class="details-link">
+                    <i class="bi bi-link-45deg"></i>
+                  </a>
+                </div>
+              </div>
+            </div>
+            <a href="{item.button}" target="_blank" rel="noopener noreferrer">
+              <button>Buy Now</button>
+            </a>
+            
+          </div><!-- End Portfolio Item -->
+          {% endfor %}
+        </div><!-- End Portfolio Container -->
+      </div>
+    </div>
+  </section><!-- /Portfolio Section -->
+
+  <!-- Clients Section -->
+  <section id="clients" class="clients section light-background">
+    <div class="container section-title" data-aos="fade-up">
+      <h2>Best Deals</h2>
+      <p>Necessitatibus eius consequatur ex aliquid fuga eum quidem sint consectetur velit</p>
+    </div>
+
+    <div class="container" data-aos="fade-up" data-aos-delay="100">
+      <div class="swiper init-swiper">
+        <script type="application/json" class="swiper-config">
+          {/* Same Swiper config as before */}
+        </script>
+        <div class="swiper-wrapper align-items-center">
+          {% for client in clients %}
+          <div class="swiper-slide">
+            <img src="{{ client.image.url }}" class="img-fluid" alt="{{ client.name }}">
+          </div>
+          {% endfor %}
+        </div>
+        <div class="swiper-pagination"></div>
+      </div>
+    </div>
+  </section><!-- /Clients Section -->
+
+  <!-- Services Section -->
+  <section id="services" class="services section">
+    <div class="container section-title" data-aos="fade-up">
+      <h2>Smart One</h2>
+      <p>Necessitatibus eius consequatur ex aliquid fuga eum quidem sint consectetur velit</p>
+    </div>
+
+    <div class="container">
+      <div class="row gy-4">
+        {% for service in services %}
+        <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="{{ forloop.counter }}00">
+          <div class="service-item position-relative">
+            <div class="icon">
+              <i class="bi {{ service.icon_class }}"></i>
+            </div>
+            <h3>{{ service.title }}</h3>
+            <p>{{ service.short_description }}</p>
+            <a href="{% url 'service_detail' service.id %}" class="readmore stretched-link">
+              Read more <i class="bi bi-arrow-right"></i>
+            </a>
+          </div>
+        </div><!-- End Service Item -->
+        {% endfor %}
+      </div>
+    </div>
+  </section><!-- /Services Section -->
+
+  <!-- Testimonials Section -->
+  <section id="testimonials" class="testimonials section">
+    <div class="container section-title" data-aos="fade-up">
+      <h2>Cracking</h2>
+      <p>Necessitatibus eius consequatur ex aliquid fuga eum quidem sint consectetur velit</p>
+    </div>
+
+    <div class="container" data-aos="fade-up" data-aos-delay="100">
+      <div class="swiper init-swiper">
+        <script type="application/json" class="swiper-config">
+          {/* Same Swiper config as before */}
+        </script>
+        <div class="swiper-wrapper">
+          {% for testimonial in testimonials %}
+          <div class="swiper-slide">
+            <div class="testimonial-item">
+              <img src="{{ testimonial.image.url }}" class="testimonial-img" alt="{{ testimonial.client_name }}">
+              <h3>{{ testimonial.client_name }}</h3>
+              <h4>{{ testimonial.role }}</h4>
+              <div class="stars">
+                <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+                <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+                <i class="bi bi-star-fill"></i>
+              </div>
+              <p>
+                <i class="bi bi-quote quote-icon-left"></i>
+                <span>{{ testimonial.quote }}</span>
+                <i class="bi bi-quote quote-icon-right"></i>
+              </p>
+            </div>
+          </div><!-- End testimonial item -->
+          {% endfor %}
+        </div>
+        <div class="swiper-pagination"></div>
+      </div>
+    </div>
+  </section><!-- /Testimonials Section -->
+
+</main>
+
+{% endblock %}
